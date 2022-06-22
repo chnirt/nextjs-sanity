@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import { Fragment, useCallback, useState } from 'react'
 
 import Collection from '../components/Collection'
+import Footer from '../components/Footer'
+import Incentives from '../components/Incentives'
 import ProductFeature from '../components/ProductFeature'
 import ProductList from '../components/ProductList'
 import ProductQuickView from '../components/ProductQuickView'
@@ -34,6 +36,8 @@ const Home: NextPage = () => {
           onClose={handleCloseQuickView}
           addToCart={handleAddToCart}
         />
+        <Incentives />
+        <Footer />
       </div>
     </Fragment>
   )

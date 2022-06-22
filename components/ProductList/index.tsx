@@ -51,7 +51,7 @@ const ProductList = ({ showQuickView }: ProductListProps) => {
                 </div>
               </div>
               <div
-                className="mt-4 flex justify-between"
+                className="mt-4 flex justify-between cursor-pointer"
                 onClick={pushProductOverview}
               >
                 <div>
