@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const NotFound = () => {
+const NotFound = ({ statusCode = 404 }) => {
   return (
     <main
       className="min-h-screen bg-cover bg-top sm:bg-top w-screen"
@@ -12,7 +12,7 @@ const NotFound = () => {
     >
       <div className="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
         <p className="text-sm font-semibold text-black text-opacity-50 uppercase tracking-wide">
-          404 error
+          {statusCode} error
         </p>
         <h1 className="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">
           Uh oh! I think you’re lost.

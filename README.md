@@ -28,3 +28,4 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 - https://github.com/tailwindlabs/heroicons
 - https://github.com/tailwindlabs/tailwindcss-aspect-ratio#readme
 - https://gnezim.ru/components/
+- https://www.sanity.io/guides/sanity-nextjs-tailwindcss

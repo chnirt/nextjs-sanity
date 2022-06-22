@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 
 interface ProductListProps {
+  data: any
   showQuickView: () => void
 }
 
@@ -16,7 +17,7 @@ const products = [...Array(10).keys()].map((i) => ({
   color: 'Black',
 }))
 
-const ProductList = ({ showQuickView }: ProductListProps) => {
+const ProductList = ({ data, showQuickView }: ProductListProps) => {
   const router = useRouter()
 
   const pushProductOverview = useCallback((e: any) => {
@@ -32,8 +33,8 @@ const ProductList = ({ showQuickView }: ProductListProps) => {
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
-            <div key={product.id} className="group relative">
+          {data.map((product: any, index: number) => (
+            <div key={`product-${index}`} className="group relative">
               <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
                 <img
                   src={product.imageSrc}
