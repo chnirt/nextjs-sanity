@@ -2,11 +2,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "echo 'Building Sanity to public/nextjs-sanity' && cd nextjs-sanity && yarn && npx @sanity/cli build ../public/nextjs-sanity -y && echo 'Done'",
+    "prebuild": "echo 'Building Sanity to public/sanity' && cd sanity && yarn && npx @sanity/cli build ../public/sanity -y && echo 'Done'",
     "build": "next build",
     "start": "next start",
     "prepare": "husky install",
-    "sanity": "cd nextjs-sanity && sanity start"
+    "sanity": "cd sanity && sanity start"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.5",
@@ -14,13 +14,16 @@
     "@portabletext/react": "^1.0.6",
     "@sanity/image-url": "^1.0.1",
     "@tailwindcss/aspect-ratio": "^0.4.0",
+    "lodash": "^4.17.21",
     "next": "latest",
+    "next-auth-sanity": "^1.4.3",
     "next-sanity": "^0.5.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-tooltip": "^4.2.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.182",
     "@types/node": "17.0.35",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.5",

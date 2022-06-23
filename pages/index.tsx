@@ -1,8 +1,10 @@
-import { productsQuery } from '@lib/query'
+import { homeQuery, productsQuery } from '@lib/query'
 import { urlFor, usePreviewSubscription } from '@lib/sanity'
 import { getClient } from '@lib/sanity.server'
 import { useRouter } from 'next/router'
 import { Fragment, useCallback, useState } from 'react'
+import { numberWithCommas } from 'utils'
+import _ from 'lodash'
 
 import Collection from '../components/Collection'
 import Footer from '../components/Footer'
@@ -40,11 +42,9 @@ const Home = ({ data, review }: HomeProps) => {
     // enabled: preview && data.post?.slug,
   })
 
-  if (!router.isFallback && !data.products) {
+  if (!router.isFallback && !data.products && !data.home) {
     return <NotFound statusCode={404} />
   }
-
-  console.log(products)
 
   return (
     <Fragment>
@@ -66,20 +66,32 @@ const Home = ({ data, review }: HomeProps) => {
 }
 
 export async function getStaticProps({ params, preview = false }: any) {
+  // const homeResponse = await getClient(preview).fetch(homeQuery)
   const productsResponse = await getClient(preview).fetch(productsQuery)
-
+  // const home = {
+  //   ...homeResponse,
+  //   logo: _.get(homeResponse, [0, 'logo'])
+  //     ? urlFor(_.get(homeResponse, [0, 'logo'])).url()
+  //     : '',
+  // }
   const products = productsResponse.map((product: any) => ({
     ...product,
-    name: product.title ?? '',
-    color: product.defaultProductVariant.grams ?? 0,
-    price: product.defaultProductVariant.price ?? 0,
-    imageSrc: urlFor(product.defaultProductVariant.images[0]).width(200).url(),
-    imageAlt: product.defaultProductVariant.images[0]._key ?? '',
+    name: _.get(product, ['name']) ?? '',
+    colors: _.get(product, ['colors']) ?? '',
+    price: numberWithCommas(_.get(product, ['price']) ?? 0),
+    thumbnailSrc: _.get(product, ['colors', 0, 'images', 0])
+      ? urlFor(_.get(product, ['colors', 0, 'images', 0])).url()
+      : '',
+    thumbnailAlt: _.get(product, ['colors', 0, 'images', 0, '_key']) ?? '',
   }))
+
   return {
     props: {
       preview,
-      data: { products },
+      data: {
+        // home,
+        products,
+      },
     },
   }
 }

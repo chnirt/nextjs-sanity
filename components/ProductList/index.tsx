@@ -20,9 +20,8 @@ const products = [...Array(10).keys()].map((i) => ({
 const ProductList = ({ data, showQuickView }: ProductListProps) => {
   const router = useRouter()
 
-  const pushProductOverview = useCallback((e: any) => {
-    e.preventDefault()
-    router.push('/product-overview')
+  const pushProduct = useCallback((product: any) => {
+    router.push(`/product/${product.slug.current}`)
   }, [])
 
   return (
@@ -37,9 +36,9 @@ const ProductList = ({ data, showQuickView }: ProductListProps) => {
             <div key={`product-${index}`} className="group relative">
               <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
                 <img
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
-                  className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                  src={product.thumbnailSrc}
+                  alt={product.thumbnailAlt}
+                  className="w-full h-full object-center object-contain lg:w-full lg:h-full"
                 />
                 <div className="flex items-end p-4">
                   <button
@@ -53,7 +52,7 @@ const ProductList = ({ data, showQuickView }: ProductListProps) => {
               </div>
               <div
                 className="mt-4 flex justify-between cursor-pointer"
-                onClick={pushProductOverview}
+                onClick={() => pushProduct(product)}
               >
                 <div>
                   <h3 className="text-sm text-gray-700">

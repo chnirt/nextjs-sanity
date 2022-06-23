@@ -1,4 +1,8 @@
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import { getClient } from '@lib/sanity.server'
+import { homeQuery } from '@lib/query'
+import _ from 'lodash'
+import { urlFor } from '@lib/sanity'
 
 import Navbar from '../Navbar'
 import Cart from '../Cart'
@@ -10,6 +14,22 @@ interface LayoutProp {
 
 const Layout = ({ children }: LayoutProp) => {
   const [cartOpen, setCartOpen] = useState(false)
+  const [information, setInformation] = useState<any>(null)
+
+  useEffect(() => {
+    async function fetchHome() {
+      const homeResponse = await getClient().fetch(homeQuery)
+      const home = {
+        ...homeResponse,
+        logo: _.get(homeResponse, [0, 'logo'])
+          ? urlFor(_.get(homeResponse, [0, 'logo'])).url()
+          : '',
+      }
+      setInformation(home)
+    }
+
+    fetchHome()
+  }, [])
 
   const handleOpenCart = useCallback(() => setCartOpen(true), [])
 
@@ -19,7 +39,7 @@ const Layout = ({ children }: LayoutProp) => {
     <Fragment>
       <div className="flex min-h-screen flex-col items-center justify-center">
         <Header />
-        <Navbar showCart={handleOpenCart} />
+        <Navbar logo={information?.logo} showCart={handleOpenCart} />
         <Cart show={cartOpen} onClose={handleCloseCart} />
         <main
         // className="flex w-full flex-1 flex-col items-center justify-center text-center"

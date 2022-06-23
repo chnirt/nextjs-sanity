@@ -1,19 +1,17 @@
 {
   "root": true,
   "project": {
-    "name": "nextjs-sanity",
-    "basePath": "/studio"
+    "name": "sanity"
   },
   "api": {
-    "projectId": "5j8dnnlb",
+    "projectId": "nqrryr88",
     "dataset": "production"
   },
   "plugins": [
     "@sanity/base",
     "@sanity/default-layout",
     "@sanity/default-login",
-    "@sanity/desk-tool",
-    "barcode-input"
+    "@sanity/desk-tool"
   ],
   "env": {
     "development": {

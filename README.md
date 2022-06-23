@@ -29,3 +29,4 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 - https://github.com/tailwindlabs/tailwindcss-aspect-ratio#readme
 - https://gnezim.ru/components/
 - https://www.sanity.io/guides/sanity-nextjs-tailwindcss
+- https://www.youtube.com/watch?v=FcRWgWQale4&t=3290s

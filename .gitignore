@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/nextjs-sanity/node_modules
+/sanity/node_modules
 /.pnp
 .pnp.js
 

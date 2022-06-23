@@ -4,6 +4,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 
 interface NavbarProps {
+  logo: string
   showCart: () => void
 }
 const navigation = [
@@ -17,7 +18,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Navbar = ({ showCart = () => {} }: NavbarProps) => {
+const Navbar = ({ logo = '', showCart = () => {} }: NavbarProps) => {
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed w-full top-0 z-20">
       {({ open }) => (
@@ -47,7 +48,8 @@ const Navbar = ({ showCart = () => {} }: NavbarProps) => {
                   <Link href="/">
                     <img
                       className="hidden lg:block h-8 w-auto cursor-pointer"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                      // src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                      src={logo}
                       alt="Workflow"
                     />
                   </Link>
