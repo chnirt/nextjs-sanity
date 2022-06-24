@@ -68,13 +68,13 @@ interface ProductProps {
 export default function ProductScreen({ data, preview }: ProductProps) {
   const router = useRouter()
   const { data: product } = usePreviewSubscription(productQuery, {
-    params: { slug: data.product?.slug },
-    initialData: data.product,
-    enabled: preview && data.product?.slug,
+    params: { slug: data?.product?.slug },
+    initialData: data?.product,
+    enabled: preview && data?.product?.slug,
   })
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [selectedColor, setSelectedColor] = useState(product?.colors[0])
 
-  if (!router.isFallback && !data.product?.slug) {
+  if (!router?.isFallback && !data?.product?.slug) {
     return <NotFound statusCode={404} />
   }
 
@@ -87,17 +87,17 @@ export default function ProductScreen({ data, preview }: ProductProps) {
             {/* Image selector */}
             <div className="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {selectedColor.images.map((image: any) => (
+                {selectedColor?.images?.map((image: any) => (
                   <Tab
-                    key={image.id}
+                    key={image?.id}
                     className="relative w-24 h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50"
                   >
                     {({ selected }) => (
                       <>
-                        <span className="sr-only">{image.name}</span>
+                        <span className="sr-only">{image?.name}</span>
                         <span className="absolute inset-0 rounded-md overflow-hidden">
                           <img
-                            src={image.src}
+                            src={image?.src}
                             alt=""
                             className="w-full h-full object-center object-cover"
                           />
@@ -117,11 +117,11 @@ export default function ProductScreen({ data, preview }: ProductProps) {
             </div>
 
             <Tab.Panels className="w-full aspect-w-1 aspect-h-1">
-              {selectedColor.images.map((image: any) => (
-                <Tab.Panel key={image.id}>
+              {selectedColor?.images?.map((image: any) => (
+                <Tab.Panel key={image?.id}>
                   <img
-                    src={image.src}
-                    alt={image.alt}
+                    src={image?.src}
+                    alt={image?.alt}
                     className="w-full h-full object-center object-cover sm:rounded-lg"
                   />
                 </Tab.Panel>
@@ -132,11 +132,11 @@ export default function ProductScreen({ data, preview }: ProductProps) {
           {/* Product info */}
           <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
-              {product.name}
+              {product?.name}
             </h1>
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl text-gray-900">{selectedColor.price}</p>
+              <p className="text-3xl text-gray-900">{selectedColor?.price}</p>
             </div>
             å{/* Reviews */}
             <div className="mt-3">
@@ -147,7 +147,7 @@ export default function ProductScreen({ data, preview }: ProductProps) {
                     <StarIcon
                       key={rating}
                       className={classNames(
-                        product.rating > rating
+                        product?.rating > rating
                           ? 'text-indigo-500'
                           : 'text-gray-300',
                         'h-5 w-5 flex-shrink-0'
@@ -156,7 +156,7 @@ export default function ProductScreen({ data, preview }: ProductProps) {
                     />
                   ))}
                 </div>
-                <p className="sr-only">{product.rating} out of 5 stars</p>
+                <p className="sr-only">{product?.rating} out of 5 stars</p>
               </div>
             </div>
             <div className="mt-6">
@@ -164,7 +164,7 @@ export default function ProductScreen({ data, preview }: ProductProps) {
 
               <div
                 className="text-base text-gray-700 space-y-6"
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: product?.description }}
               />
             </div>
             <form className="mt-6">
@@ -181,7 +181,7 @@ export default function ProductScreen({ data, preview }: ProductProps) {
                     Choose a color
                   </RadioGroup.Label>
                   <div className="flex items-center space-x-3">
-                    {product.colors.map((color: any) => (
+                    {product?.colors?.map((color: any) => (
                       <RadioGroup.Option
                         key={color.name}
                         value={color}
@@ -300,10 +300,10 @@ export async function getStaticProps({ params, preview = false }: any) {
     ...productResponse,
     name: _.get(productResponse, ['name']) ?? '',
     price: numberWithCommas(_.get(productResponse, ['price']) ?? 0),
-    colors: productResponse.colors.map((color: any) => ({
+    colors: productResponse?.colors?.map((color: any) => ({
       ...color,
-      price: numberWithCommas(color.price ?? 0),
-      images: color.images.map((image: any) => ({
+      price: numberWithCommas(color?.price ?? 0),
+      images: color?.images?.map((image: any) => ({
         id: _.get(image, ['_key']) ?? '',
         src: image ? urlFor(image).width(200).url() : '',
         alt: _.get(image, ['_key']),
@@ -324,6 +324,6 @@ export async function getStaticPaths() {
 
   return {
     paths: paths.map((slug: any) => ({ params: { slug } })),
-    fallback: true,
+    fallback: false,
   }
 }
