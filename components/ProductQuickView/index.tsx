@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
+import { numberWithCommas } from 'utils'
 
 interface ProductQuickViewProp {
   show: boolean
+  selectedProduct: any
   onClose: () => void
   addToCart: (product: any) => void
 }
@@ -41,11 +43,33 @@ function classNames(...classes: string[]) {
 
 const ProductQuickView = ({
   show = false,
+  selectedProduct,
   onClose = () => {},
   addToCart = () => {},
 }: ProductQuickViewProp) => {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const [selectedColor, setSelectedColor] = useState(selectedProduct?.colors[0])
+  const [selectedStorage, setSelectedStorage] = useState(
+    selectedProduct?.storages[0]
+  )
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setSelectedColor(selectedProduct?.colors[0])
+      setSelectedStorage(selectedProduct?.storages[0])
+    }
+  }, [selectedProduct])
+
+  // console.log(
+  //   selectedProduct?.price,
+  //   selectedColor?.price,
+  //   selectedStorage?.price
+  // )
+
+  const price = numberWithCommas(
+    selectedProduct?.price + selectedColor?.price + selectedStorage?.price
+  )
+
+  if (!selectedProduct) return
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -87,14 +111,14 @@ const ProductQuickView = ({
                   <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
                     <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
                       <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={selectedColor?.images[0]?.src}
+                        alt={selectedColor?.images[0]?.alt}
                         className="object-center object-cover"
                       />
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">
-                        {product.name}
+                        {selectedProduct?.name}
                       </h2>
 
                       <section
@@ -105,12 +129,10 @@ const ProductQuickView = ({
                           Product information
                         </h3>
 
-                        <p className="text-2xl text-gray-900">
-                          {product.price}
-                        </p>
+                        <p className="text-2xl text-gray-900">{price}</p>
 
                         {/* Reviews */}
-                        <div className="mt-6">
+                        {/* <div className="mt-6">
                           <h4 className="sr-only">Reviews</h4>
                           <div className="flex items-center">
                             <div className="flex items-center">
@@ -137,7 +159,7 @@ const ProductQuickView = ({
                               {product.reviewCount} reviews
                             </a>
                           </div>
-                        </div>
+                        </div> */}
                       </section>
 
                       <section
@@ -164,7 +186,7 @@ const ProductQuickView = ({
                                 Choose a color
                               </RadioGroup.Label>
                               <span className="flex items-center space-x-3">
-                                {product.colors.map((color) => (
+                                {selectedProduct?.colors?.map((color: any) => (
                                   <RadioGroup.Option
                                     key={color.name}
                                     value={color}
@@ -188,9 +210,12 @@ const ProductQuickView = ({
                                     <span
                                       aria-hidden="true"
                                       className={classNames(
-                                        color.class,
+                                        // color.class,
                                         'h-8 w-8 border border-black border-opacity-10 rounded-full'
                                       )}
+                                      style={{
+                                        backgroundColor: color.color,
+                                      }}
                                     />
                                   </RadioGroup.Option>
                                 ))}
@@ -202,7 +227,7 @@ const ProductQuickView = ({
                           <div className="mt-10">
                             <div className="flex items-center justify-between">
                               <h4 className="text-sm text-gray-900 font-medium">
-                                Size
+                                Storage
                               </h4>
                               <a
                                 // href="#"
@@ -213,15 +238,15 @@ const ProductQuickView = ({
                             </div>
 
                             <RadioGroup
-                              value={selectedSize}
-                              onChange={setSelectedSize}
+                              value={selectedStorage}
+                              onChange={setSelectedStorage}
                               className="mt-4"
                             >
                               <RadioGroup.Label className="sr-only">
                                 Choose a size
                               </RadioGroup.Label>
                               <div className="grid grid-cols-4 gap-4">
-                                {product.sizes.map((size) => (
+                                {selectedProduct?.storages?.map((size: any) => (
                                   <RadioGroup.Option
                                     key={size.name}
                                     value={size}
@@ -239,7 +264,7 @@ const ProductQuickView = ({
                                     {({ active, checked }) => (
                                       <>
                                         <RadioGroup.Label as="span">
-                                          {size.name}
+                                          {size.name}GB
                                         </RadioGroup.Label>
                                         {size.inStock ? (
                                           <span

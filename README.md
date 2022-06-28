@@ -30,3 +30,4 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 - https://gnezim.ru/components/
 - https://www.sanity.io/guides/sanity-nextjs-tailwindcss
 - https://www.youtube.com/watch?v=FcRWgWQale4&t=3290s
+- https://dorelljames.com/blog/dynamic-groq-query-in-javascript/

@@ -3,6 +3,6 @@ export function numberWithCommas(x: number) {
     minimumFractionDigits: 0, // shoud use for android
     maximumFractionDigits: 2,
     style: 'currency',
-    currency: 'VND',
+    currency: 'USD',
   })
 }
