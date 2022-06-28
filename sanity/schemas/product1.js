@@ -3,9 +3,7 @@ export default {
   title: 'Product1',
   type: 'document',
 
-  initialValue: () => ({
-    publishedAt: new Date().toISOString(),
-  }),
+  initialValue: () => ({}),
 
   fields: [
     {
