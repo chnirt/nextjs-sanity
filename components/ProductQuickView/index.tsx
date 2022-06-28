@@ -69,7 +69,7 @@ const ProductQuickView = ({
     selectedProduct?.price + selectedColor?.price + selectedStorage?.price
   )
 
-  if (!selectedProduct) return
+  if (!selectedProduct) return null
 
   return (
     <Transition.Root show={show} as={Fragment}>
